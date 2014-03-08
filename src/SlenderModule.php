@@ -21,6 +21,6 @@ class SlenderModule implements ModuleInvokableInterface,
 
     public function invoke(\Slender\App &$app)
     {
-        // TODO: Implement invoke() method.
+
     }
 }
