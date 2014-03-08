@@ -4,7 +4,7 @@
     "description": "Integrate twig templating with Slender",
     "keywords": ["slender-module","twig","template"],
     "license": "MIT",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "homepage": "http://alanpich.github.io/slender",
     "authors": [
         {
