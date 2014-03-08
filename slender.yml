@@ -12,4 +12,11 @@ module:
 
 services:
   ## Overwrite the default View class to use Twig
-  view: Slender\Modules\Twig\Factories\ViewFactory
+  twig: Slender\Module\Twig\Factory\TwigFactory
+  view: Slender\Module\Twig\View
+
+
+twig:
+  environment: []
+  extensions:
+    - Slender\Module\Twig\TwigExtension
