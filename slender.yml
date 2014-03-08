@@ -1,0 +1,15 @@
+##########################################
+#
+#  Twig templating engine integration
+#
+###########################################
+
+module:
+  name: twig
+  author: Alan Pich <alan.pich@gmail.com>
+  namespace: Slender\Modules\Twig
+  autoload: composer
+
+services:
+  ## Overwrite the default View class to use Twig
+  view: Slender\Modules\Twig\Factories\ViewFactory
