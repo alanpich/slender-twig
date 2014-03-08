@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Slender\\Module\\ServiceManager\\": "src/"
+            "Slender\\Module\\Twig\\": "src/"
         }
     }
 
