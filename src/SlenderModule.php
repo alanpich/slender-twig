@@ -5,7 +5,8 @@ namespace Slender\Module\Twig;
 use Slender\Interfaces\ModuleInvokableInterface;
 use Slender\Interfaces\ModulePathProviderInterface;
 
-class SlenderModule implements ModuleInvokableInterface
+class SlenderModule implements ModuleInvokableInterface,
+                               ModulePathProviderInterface
 {
 
     /**
@@ -15,11 +16,10 @@ class SlenderModule implements ModuleInvokableInterface
      */
     public static function getModulePath()
     {
-        die('hello?');
         return dirname(__DIR__);
     }
 
-    public function invoke(\Slender\App $app)
+    public function invoke(\Slender\App &$app)
     {
         // TODO: Implement invoke() method.
     }
