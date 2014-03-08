@@ -1,0 +1,27 @@
+{
+    "name": "slender/twig",
+    "type": "library",
+    "description": "Integrate twig templating with Slender",
+    "keywords": ["slender-module","twig","template"],
+    "license": "MIT",
+    "version": "0.1.0",
+    "homepage": "http://alanpich.github.io/slender",
+    "authors": [
+        {
+            "name": "Alan Pich",
+            "email": "alan.pich@gmail.com"
+        }
+    ],
+    "require": {
+
+    },
+    "require-dev": {
+        "slender/slender": "dev-develop"
+    },
+    "autoload": {
+        "psr-4": {
+            "Slender\\Module\\ServiceManager\\": "src/"
+        }
+    }
+
+}
