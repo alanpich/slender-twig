@@ -1,74 +1,140 @@
 <?php
-/**
- * Slim - a micro PHP 5 framework
- *
- * @author      Josh Lockhart
- * @author      Andrew Smith
- * @link        http://www.slimframework.com
- * @copyright   2013 Josh Lockhart
- * @version     0.1.0
- * @package     SlimViews
- *
- * MIT LICENSE
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to
- * the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
- * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 namespace Slender\Module\Twig;
 
-use Slim\App as Slim;
+use Slender\Core\DependencyInjector\Annotation as Slender;
+use Slim\Interfaces\Http\RequestInterface;
 
+/**
+ * Class TwigExtension
+ *
+ * @package Slender\Module\Twig
+ */
 class TwigExtension extends \Twig_Extension
 {
+    /**
+     * @var \Twig_Environment
+     * @Slender\Inject
+     */
+    protected $twig;
+
+    /**
+     * @Slender\Inject
+     */
+    protected $request;
+
+    /**
+     * @Slender\Inject
+     */
+    protected $router;
+
+    /**
+     * @return string
+     */
     public function getName()
     {
-        return 'slim';
+        return 'slender-twig';
     }
 
+    /**
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
             new \Twig_SimpleFunction('urlFor', array($this, 'urlFor')),
+            new \Twig_SimpleFunction('url', array($this, 'urlFor')),
             new \Twig_SimpleFunction('baseUrl', array($this, 'base')),
             new \Twig_SimpleFunction('siteUrl', array($this, 'site')),
         );
     }
 
+    /**
+     * @param        $name
+     * @param array  $params
+     * @param string $appName
+     * @return string
+     */
     public function urlFor($name, $params = array(), $appName = 'default')
     {
-        return Slim::getInstance($appName)->urlFor($name, $params);
+        return $this->request->getScriptName() . $this->router->urlFor($name, $params);
     }
 
+    /**
+     * @param        $url
+     * @param bool   $withUri
+     * @param string $appName
+     * @return string
+     */
     public function site($url, $withUri = true, $appName = 'default')
     {
         return $this->base($withUri, $appName) . '/' . ltrim($url, '/');
     }
 
+    /**
+     * @param bool   $withUri
+     * @param string $appName
+     * @return string
+     */
     public function base($withUri = true, $appName = 'default')
     {
-        $req = Slim::getInstance($appName)->request();
-        $uri = $req->getUrl();
+        $uri = $this->request->getUrl();
 
         if ($withUri) {
-            $uri .= $req->getRootUri();
+            $uri .= $this->request->getRootUri();
         }
 
         return $uri;
     }
+
+    /**
+     * @param mixed $request
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param mixed $router
+     */
+    public function setRouter($router)
+    {
+        $this->router = $router;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     */
+    public function setTwig($twig)
+    {
+        $this->twig = $twig;
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    public function getTwig()
+    {
+        return $this->twig;
+    }
+
+
+
+
 }

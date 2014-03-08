@@ -1,5 +1,5 @@
 <?php
-namespace Slender\Modules\Twig\Factories;
+namespace Slender\Module\Twig\Factories;
 
 use Slender\App;
 use Slender\Interfaces\FactoryInterface;
